@@ -33,6 +33,9 @@ public class Tariff implements Serializable {
     @Column(name="MAXIMUM_DAYS")
     private int maximalAmountOfDays;
 
+    public Tariff() {
+    }
+
     public Long getId() {
         return id;
     }
