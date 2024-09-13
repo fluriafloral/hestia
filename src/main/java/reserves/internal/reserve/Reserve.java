@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -36,6 +37,7 @@ public class Reserve {
     @JoinColumn(name="GUEST_ID")
     private List<Guest> guests;
 
+    @OneToOne
     @JoinColumn(name="ROOM_ID")
     private Room room;
 
@@ -46,6 +48,9 @@ public class Reserve {
 
     public Reserve(List<Guest> guests) {
         this.guests = guests;
+    }
+
+    public Reserve() {
     }
 
     public Long getId() {
