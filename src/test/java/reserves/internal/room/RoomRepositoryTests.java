@@ -37,7 +37,7 @@ public class RoomRepositoryTests {
     @MethodSource("setStatus")
     void testFindByStatus(RoomStatus status) {
         List<Room> retrievedByStatusList = roomRepo.findByStatus(status);
-        assertTrue(retrievedByStatusList.stream().allMatch(room -> room.getStatus() == status));
+        assertTrue(retrievedByStatusList.stream().allMatch(room -> room.getStatus().equals(status)));
     }
 
     private static Stream<Arguments> setStatus() {
