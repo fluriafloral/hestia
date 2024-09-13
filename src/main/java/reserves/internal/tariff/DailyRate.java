@@ -37,6 +37,9 @@ public class DailyRate {
     @Column(name="INCREASE_PER_CHILDREN")
     private BigDecimal increasePerChildren;
 
+    public DailyRate() {
+    }
+
     public Long getId() {
         return id;
     }

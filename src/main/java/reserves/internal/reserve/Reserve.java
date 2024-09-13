@@ -48,6 +48,10 @@ public class Reserve {
 
     public Reserve(List<Guest> guests) {
         this.guests = guests;
+    }   
+
+    public Reserve(Long id) {
+        this.id = id;
     }
 
     public Reserve() {
