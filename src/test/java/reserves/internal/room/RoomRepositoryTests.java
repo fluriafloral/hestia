@@ -1,11 +1,15 @@
 package reserves.internal.room;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -29,16 +33,19 @@ public class RoomRepositoryTests {
         assertAll(retrievedroomTypeList.stream().map(room -> () -> assertEquals(roomType.getId(), room.getRoomType().getId())));
     }
 
-    @Test
-    void testFindByStatus() {
-        List<Room> retrievedFreeList = roomRepo.findByStatus(RoomStatus.FREE);
-        List<Room> retrievedOccupiedList = roomRepo.findByStatus(RoomStatus.OCCUPIED);
-        List<Room> retrievedUncleanList = roomRepo.findByStatus(RoomStatus.UNCLEAN);
-        List<Room> retrievedInMaintenanceList = roomRepo.findByStatus(RoomStatus.IN_MAINTENANCE);
+    @ParameterizedTest
+    @MethodSource("setStatus")
+    void testFindByStatus(RoomStatus status) {
+        List<Room> retrievedByStatusList = roomRepo.findByStatus(status);
+        assertTrue(retrievedByStatusList.stream().allMatch(room -> room.getStatus() == status));
+    }
 
-        assertTrue(retrievedFreeList.stream().allMatch(room -> room.getStatus() == RoomStatus.FREE));
-        assertTrue(retrievedOccupiedList.stream().allMatch(room -> room.getStatus() == RoomStatus.OCCUPIED));
-        assertTrue(retrievedUncleanList.stream().allMatch(room -> room.getStatus() == RoomStatus.UNCLEAN));
-        assertTrue(retrievedInMaintenanceList.stream().allMatch(room -> room.getStatus() == RoomStatus.IN_MAINTENANCE));
+    private static Stream<Arguments> setStatus() {
+        return Stream.of (
+            Arguments.of(RoomStatus.FREE),
+            Arguments.of(RoomStatus.OCCUPIED), 
+            Arguments.of(RoomStatus.UNCLEAN), 
+            Arguments.of(RoomStatus.IN_MAINTENANCE)
+        );
     }
 }
