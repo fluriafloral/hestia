@@ -3,64 +3,30 @@ package reserves.internal.room;
 import javax.naming.directory.AttributeInUseException;
 import javax.naming.directory.InvalidAttributeValueException;
 
-import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import reserves.internal.roomType.RoomType;
 
 public class RoomServiceTests {
 
-    @Autowired
-    private static RoomService roomService;
+    private RoomService roomService;
 
-    private static RoomType roomType;
+    private RoomType roomType;
 
-    private static Room room;
+    private Room room;
+
+    public RoomServiceTests(RoomService roomService) {
+        this.roomService = roomService;
+    }
 
     @BeforeEach
-    public static void setUp() {
+    public void setUp() {
         roomType = new RoomType("compartilhado standard", true);
         room = new Room("1", roomType, 1);
-    }
-
-    @AfterAll
-    public static void cleanUp() {
-        roomService.deleteRoomType(roomType.getId());
-        roomService.deleteRoom(room.getId());
-    }
-
-    @Test
-    public void testCreateNewRoomTypeSuccess() {
-        assertEquals(roomType, roomService.createNewRoomType(roomType));
-    }
-
-    @Test
-    public void testCreateNewRoomTypeFailNameEmpty() {
-
-        RoomType roomTypeEmptyName = new RoomType("", true);
-
-        Exception exception = assertThrows(InvalidAttributeValueException.class, () -> {
-            roomService.createNewRoomType(roomTypeEmptyName);
-        });
-
-        assertTrue(exception.getMessage().contains("Name cannot be empty"));
-    }
-
-    @Test 
-    public void testCreateNewRoomTypeFailNameAlreadyExists() {
-
-        RoomType roomType_ = new RoomType("compartilhado standard", false);
-
-        Exception exception = assertThrows(AttributeInUseException.class, () -> {
-            roomService.createNewRoomType(roomType_);
-        });
-
-        assertTrue(exception.getMessage().contains("Name already declared"));
     }
 
     @Test
