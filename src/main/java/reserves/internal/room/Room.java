@@ -49,6 +49,9 @@ public class Room implements Serializable {
     @Column(name = "MAXIMUM_OCCUPATION")
     private int maxOccupation;
 
+    @Column(name = "MAXIMUM_CHILDREN_OCCUPATION")
+    private int maxChildrenOccupation;
+
     public Room(String name, RoomType roomType, int maxOccupation) {
         this.name = name;
         this.roomType = roomType;
@@ -111,4 +114,11 @@ public class Room implements Serializable {
         this.maxOccupation = maxOccupation;
     }
 
+    public int getMaxChildrenOccupation() {
+        return maxChildrenOccupation;
+    }
+
+    public void setMaxChildrenOccupation(int maxChildrenOccupation) {
+        this.maxChildrenOccupation = maxChildrenOccupation;
+    }
 }
