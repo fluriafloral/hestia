@@ -28,7 +28,7 @@ public class DailyRate {
     @JoinColumn(name="TARIFF_ID")
     private Tariff tariff;
 
-    @Column(name="PRICE_PER_NIGHT")
+    @Column(name="BASE_VALUE")
     private BigDecimal baseValue;
 
     @Column(name="INCREASE_PER_GUEST")
