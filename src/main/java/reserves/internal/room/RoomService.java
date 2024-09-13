@@ -1,5 +1,8 @@
 package reserves.internal.room;
 
+import reserves.internal.roomType.RoomType;
+import reserves.internal.roomType.RoomTypeRepository;
+
 public class RoomService {
 
     private RoomRepository roomRepo;

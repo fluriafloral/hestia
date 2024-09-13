@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import reserves.internal.room.Room.RoomStatus;
+import reserves.internal.roomType.RoomType;
 
 public interface RoomRepository extends JpaRepository<Room, Long>{
 

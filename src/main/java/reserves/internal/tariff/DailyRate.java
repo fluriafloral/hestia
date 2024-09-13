@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import reserves.internal.room.RoomType;
+import reserves.internal.roomType.RoomType;
 
 @Entity
 @Table(name="T_DAILY_RATE")

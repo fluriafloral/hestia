@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import reserves.internal.room.Room.RoomStatus;
+import reserves.internal.roomType.RoomType;
+import reserves.internal.roomType.RoomTypeRepository;
 
 @DataJpaTest
 public class RoomRepositoryTests {

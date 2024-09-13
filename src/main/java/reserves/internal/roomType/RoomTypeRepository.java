@@ -1,4 +1,4 @@
-package reserves.internal.room;
+package reserves.internal.roomType;
 
 import java.util.List;
 
