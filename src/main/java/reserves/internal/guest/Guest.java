@@ -54,6 +54,11 @@ public class Guest {
 
     private String address;
 
+    public Guest(String name, String documentNumber) {
+        this.name = name;
+        this.documentNumber = documentNumber;
+    }
+
     public Guest(String name, LocalDate birthDate) {
         this.name = name;
         this.birthDate = birthDate;
