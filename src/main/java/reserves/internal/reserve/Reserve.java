@@ -39,23 +39,32 @@ public class Reserve {
     @JoinColumn(name="ROOM_ID")
     private Room room;
 
+    public Reserve(LocalDate start, LocalDate end) {
+        this.start = start;
+        this.end = end;
+    }
+
+    public Reserve(List<Guest> guests) {
+        this.guests = guests;
+    }
+
     public Long getId() {
         return id;
     }
 
-    public LocalDate getstart() {
+    public LocalDate getStart() {
         return start;
     }
 
-    public void setstart(LocalDate start) {
+    public void setStart(LocalDate start) {
         this.start = start;
     }
 
-    public LocalDate getend() {
+    public LocalDate getEnd() {
         return end;
     }
 
-    public void setend(LocalDate end) {
+    public void setEnd(LocalDate end) {
         this.end = end;
     }
 
@@ -72,7 +81,7 @@ public class Reserve {
     }
 
     public void removeGuest(String documentNumber) {
-        guests.removeIf(guest -> (guest.getDocumentNumber().equals(documentNumber)));
+        guests.removeIf(guest -> guest.getDocumentNumber().equals(documentNumber));
     }
 
     public Room getRoom() {
