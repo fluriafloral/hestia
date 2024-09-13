@@ -27,6 +27,12 @@ public class Tariff implements Serializable {
     @Column(name="END_DATE")
     private LocalDate endDate;
 
+    @Column(name="MINIMAL_DAYS")
+    private int minimalAmountOfDays;
+
+    @Column(name="MAXIMUM_DAYS")
+    private int maximalAmountOfDays;
+
     public Long getId() {
         return id;
     }
@@ -53,5 +59,21 @@ public class Tariff implements Serializable {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    public int getMinimalAmountOfDays() {
+        return minimalAmountOfDays;
+    }
+
+    public void setMinimalAmountOfDays(int minimalAmountOfDays) {
+        this.minimalAmountOfDays = minimalAmountOfDays;
+    }
+
+    public int getMaximalAmountOfDays() {
+        return maximalAmountOfDays;
+    }
+
+    public void setMaximalAmountOfDays(int maximalAmountOfDays) {
+        this.maximalAmountOfDays = maximalAmountOfDays;
     }
 }
