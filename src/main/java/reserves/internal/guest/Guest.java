@@ -52,6 +52,7 @@ public class Guest {
 
     private String telephone;
 
+    @Column(name = "HOME_ADDRESS")
     private String address;
 
     public Guest(String name, String documentNumber) {
