@@ -85,7 +85,7 @@ public class RoomTypeServiceImplTests {
 
         when(roomTypeRepo.findAll()).thenReturn(List.of(roomType, roomType1));
 
-        List<RoomType> roomTypeList = roomTypeService.getAllRoomTypes();
+        List<RoomType> roomTypeList = roomTypeService.findAllRoomTypes();
 
         assertThat(roomTypeList).isNotNull();
         assertThat(roomTypeList.size()).isEqualTo(2);
@@ -105,9 +105,10 @@ public class RoomTypeServiceImplTests {
     @Test
     public void testFindRoomTypeByNameFail() {
 
-        given(roomTypeRepo.findByName("Test Not Found")).isEmpty();
+        String roomTypeNameNotFound = "Test Not Found";
+        given(roomTypeRepo.findByName(roomTypeNameNotFound)).isEmpty();
 
-        Optional<RoomType> retrievedRoomType = roomTypeService.findRoomTypeByName("Test Not Found");
+        Optional<RoomType> retrievedRoomType = roomTypeService.findRoomTypeByName(roomTypeNameNotFound);
 
         assertThat(retrievedRoomType).isEmpty();
     }
@@ -126,12 +127,13 @@ public class RoomTypeServiceImplTests {
     @Test
     public void testUpdateRoomTypeSuccess() {
         
+        String nameUpdate = "Test Update";
         when(roomTypeRepo.save(roomType)).thenReturn(roomType);
-        roomType.setName("Test Update");
+        roomType.setName(nameUpdate);
 
         RoomType updatedRoomType = roomTypeService.updateRoomType(roomType);
 
-        assertThat(updatedRoomType.getName()).isEqualTo("Test Update");
+        assertEquals(nameUpdate, updatedRoomType.getName());
     }
 
     @Test
@@ -151,11 +153,11 @@ public class RoomTypeServiceImplTests {
     public void testDeleteRoomType() {
 
         long roomTypeId = roomType.getId();
-
         willDoNothing().given(roomTypeRepo).deleteById(roomTypeId);
 
         roomTypeService.deleteRoomType(roomTypeId);
 
         verify(roomTypeRepo, times(1)).deleteById(roomTypeId);
+        assertThat(roomTypeRepo.existsByName(roomType.getName())).isFalse();
     }
 }
