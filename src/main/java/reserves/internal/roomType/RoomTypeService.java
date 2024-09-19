@@ -1,20 +1,14 @@
 package reserves.internal.roomType;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
-@Service
-public class RoomTypeService {  
+public interface RoomTypeService {
 
-    @Autowired
-    private RoomTypeRepository roomTypeRepo;
-
-    public RoomType createNewRoomType(RoomType roomType) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createNewRoomType'");
-    }
-
-    public void deleteRoomType(long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    RoomType saveRoomType(RoomType roomType);
+    List<RoomType> getAllRoomTypes();
+    Optional<RoomType> findRoomTypeByName(String name);
+    List<RoomType> findRoomTypeByShared(Boolean shared);
+    RoomType updateRoomType(RoomType roomType);
+    void deleteRoomType(long id);
 }

@@ -27,8 +27,8 @@ public class RoomTypeRepositoryTests {
 
     @Test
     void testFindByName() {
-        RoomType retrievedShared = roomTypeRepo.findByName("Standard Shared");
-        RoomType retrievedPrivateDouble = roomTypeRepo.findByName("Standard Double");
+        RoomType retrievedShared = roomTypeRepo.findByName("Standard Shared").get();
+        RoomType retrievedPrivateDouble = roomTypeRepo.findByName("Standard Double").get();
 
         assertEquals(shared.getName(), retrievedShared.getName());
         assertEquals(shared.isShared(), retrievedShared.isShared());

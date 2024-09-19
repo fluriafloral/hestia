@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-
 /*
  * A Room type in the accomodation
  * 
@@ -21,7 +20,7 @@ public class RoomType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name="ROOM_TYPE_NAME",unique = true)
+    @Column(name="ROOM_TYPE_NAME", unique=true, nullable=false)
     private String name;
 
     @Column(name="ROOM_TYPE_DESCRIPTION")
