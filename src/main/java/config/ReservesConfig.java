@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import reserves.internal.room.RoomRepository;
+import reserves.internal.room.RoomService;
+import reserves.internal.room.RoomServiceImpl;
 import reserves.internal.roomType.RoomTypeRepository;
 import reserves.internal.roomType.RoomTypeService;
 import reserves.internal.roomType.RoomTypeServiceImpl;
@@ -16,11 +19,18 @@ import reserves.internal.roomType.RoomTypeServiceImpl;
 public class ReservesConfig {
 
     @Autowired
-    private RoomTypeRepository roomTypeRepository;
+    private RoomTypeRepository roomTypeRepo;
+
+    @Autowired 
+    private RoomRepository roomRepo;
 
     @Bean 
     public RoomTypeService roomTypeService() {
-        return new RoomTypeServiceImpl(roomTypeRepository);
+        return new RoomTypeServiceImpl(roomTypeRepo);
     }
 
+    @Bean
+    public RoomService roomService() {
+        return new RoomServiceImpl(roomRepo, roomTypeRepo);
+    }
 }

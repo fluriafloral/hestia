@@ -34,7 +34,7 @@ public class Room implements Serializable {
     @GeneratedValue (strategy = GenerationType.IDENTITY)
 	private Long id;
 
-    @Column(name="ROOM_NAME")
+    @Column(name="ROOM_NAME", unique=true, nullable=false)
     private String name;
 
     @ManyToOne
