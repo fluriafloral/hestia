@@ -17,14 +17,14 @@ public class RoomTypeServiceImpl implements RoomTypeService {
 
     @Override
     public RoomType saveRoomType(RoomType roomType) {
-        if (roomType.getName().isBlank()) { throw new IllegalArgumentException("Name cannot be empty");}
-        if (roomTypeRepo.existsByName(roomType.getName())) { throw new IllegalArgumentException("Name already declared");}
+        if (roomType.getName().isBlank()) { throw new IllegalArgumentException("Name cannot be empty"); }
+        if (roomTypeRepo.existsByName(roomType.getName())) { throw new IllegalArgumentException("Name already declared"); }
 
         return roomTypeRepo.save(roomType);
     }
 
     @Override
-    public List<RoomType> getAllRoomTypes() {
+    public List<RoomType> findAllRoomTypes() {
         return roomTypeRepo.findAll();
     }
 

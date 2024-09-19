@@ -6,7 +6,7 @@ import java.util.Optional;
 public interface RoomTypeService {
 
     RoomType saveRoomType(RoomType roomType);
-    List<RoomType> getAllRoomTypes();
+    List<RoomType> findAllRoomTypes();
     Optional<RoomType> findRoomTypeByName(String name);
     List<RoomType> findRoomTypeByShared(Boolean shared);
     RoomType updateRoomType(RoomType roomType);
