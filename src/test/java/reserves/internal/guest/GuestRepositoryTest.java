@@ -16,6 +16,6 @@ public class GuestRepositoryTest {
         Guest guest = new Guest();
         guest.setDocumentNumber("123456789");
 
-        assertEquals(guest.getDocumentNumber(), guestRepo.findByDocumentNumber("123456789").getDocumentNumber());
+        assertEquals(guest.getDocumentNumber(), guestRepo.findByDocumentNumber("123456789").get());
     }
 }
