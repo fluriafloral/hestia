@@ -1,11 +1,14 @@
-package reserves.internal.room;
+package reserves.internal;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import reserves.internal.room.Room;
 import reserves.internal.room.Room.RoomStatus;
+import reserves.internal.room.RoomRepository;
+import reserves.internal.room.RoomService;
 import reserves.internal.roomType.RoomType;
 import reserves.internal.roomType.RoomTypeRepository;
 

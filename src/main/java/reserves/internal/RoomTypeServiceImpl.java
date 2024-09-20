@@ -1,10 +1,13 @@
-package reserves.internal.roomType;
+package reserves.internal;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
+import reserves.internal.roomType.RoomType;
+import reserves.internal.roomType.RoomTypeRepository;
+import reserves.internal.roomType.RoomTypeService;
 
 @Service
 public class RoomTypeServiceImpl implements RoomTypeService {  
