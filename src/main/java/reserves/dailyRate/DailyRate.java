@@ -1,4 +1,4 @@
-package reserves.internal.tariff;
+package reserves.dailyRate;
 
 import java.math.BigDecimal;
 
@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import reserves.internal.roomType.RoomType;
+import reserves.internal.tariff.Tariff;
 
 @Entity
 @Table(name="T_DAILY_RATE")
