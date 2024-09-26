@@ -1,4 +1,4 @@
-package reserves.dailyRate;
+package reserves.internal.dailyRate;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
