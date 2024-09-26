@@ -1,9 +1,12 @@
 package reserves.internal.guest;
 
-import org.springframework.data.repository.CrudRepository;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 
-public interface GuestRepository extends CrudRepository<Guest, Long>{
+public interface GuestRepository extends JpaRepository<Guest, Long>{
 
-    public Guest findByDocumentNumber(String documentNumber);
+    Optional<Guest> findByDocumentNumber(String documentNumber);
+    Boolean existsByDocumentNumber(String documentNumber);
 }

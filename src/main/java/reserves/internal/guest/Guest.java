@@ -34,14 +34,14 @@ public class Guest {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="GUEST_NAME")
+    @Column(name="GUEST_NAME", nullable=false)
     private String name;
 
-    @Column(name = "DOCUMENT_NUMBER")
+    @Column(name = "DOCUMENT_NUMBER", unique=true, nullable=false)
     private String documentNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "DOCUMENT_TYPE")
+    @Column(name = "DOCUMENT_TYPE", nullable=false)
     private DocumentType documentType;
 
     @Temporal(TemporalType.DATE)
@@ -54,6 +54,12 @@ public class Guest {
 
     @Column(name = "HOME_ADDRESS")
     private String address;
+
+    public Guest(String name, String documentNumber, DocumentType documentType) {
+        this.name = name;
+        this.documentNumber = documentNumber;
+        this.documentType = documentType;
+    }
 
     public Guest(String name, String documentNumber) {
         this.name = name;
