@@ -6,13 +6,16 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.BDDAssumptions.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.willDoNothing;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -48,7 +51,7 @@ public class RoomServiceImplTests {
     }
 
     @Test
-    void testSaveRoom() {
+    void testSaveRoomSuccess() {
 
         when(roomRepo.save(room)).thenReturn(room);
 
@@ -56,6 +59,36 @@ public class RoomServiceImplTests {
 
         assertThat(savedRoom).isNotNull();
         assertEquals(room.getName(), savedRoom.getName());
+    }
+
+    @Test
+    void testSaveRoomFailNameEmpty() {
+
+        Room roomEmptyName = new Room("", roomType, 2);
+
+        given(roomRepo.findByName(roomEmptyName.getName())).isEmpty();
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            roomService.saveRoom(roomEmptyName);
+        });
+
+        verify(roomRepo, never()).save(any(Room.class));
+        assertTrue(exception.getMessage().contains("Name cannot be empty"));
+    }
+
+    @Test
+    void testSaveRoomFailNameAlreadyExists() {
+
+        Room roomAlreadyExists = new Room("Test Room", roomType, 1);
+
+        when(roomRepo.existsByName(roomAlreadyExists.getName())).thenReturn(true);
+
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
+            roomService.saveRoom(roomAlreadyExists);
+        });
+
+        verify(roomRepo, never()).save(any(Room.class));
+        assertTrue(exception.getMessage().contains("Name already declared"));
     }
 
     @Test
@@ -72,7 +105,7 @@ public class RoomServiceImplTests {
     }
 
     @Test
-    void testGetRoomByNameSuccess() {
+    void testFindRoomByNameSuccess() {
         
         when(roomRepo.findByName(room.getName())).thenReturn(Optional.of(room));
 
@@ -83,7 +116,7 @@ public class RoomServiceImplTests {
     }
 
     @Test
-    void testGetRoomByNameSuccessFail() {
+    void testFindRoomByNameSuccessFail() {
 
         String roomNameNotFound = "Test Not Found";
         given(roomRepo.findByName(roomNameNotFound)).isEmpty();
@@ -94,7 +127,7 @@ public class RoomServiceImplTests {
     }
 
     @Test
-    void testGetRoomByStatus() {
+    void testFindRoomByStatus() {
 
         RoomStatus status = RoomStatus.FREE;
         given(roomRepo.findByStatus(status)).allMatch(r -> r.getStatus().equals(status));
@@ -106,7 +139,7 @@ public class RoomServiceImplTests {
     }
 
     @Test
-    void testGetRoomByType() {
+    void testFindRoomByType() {
 
         given(roomRepo.findByRoomType(roomType)).allMatch(r -> r.getRoomType().getName().equals(roomType.getName()));
 
