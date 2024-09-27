@@ -18,13 +18,13 @@ public class Tariff implements Serializable {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="TARIFF_NAME")
+    @Column(name="TARIFF_NAME", nullable=false)
     private String name;
 
-    @Column(name="BEGINNING_DATE")
+    @Column(name="BEGINNING_DATE", nullable=false)
     private LocalDate beginningDate;
 
-    @Column(name="END_DATE")
+    @Column(name="END_DATE", nullable=false)
     private LocalDate endDate;
 
     @Column(name="MINIMAL_DAYS")
@@ -32,6 +32,12 @@ public class Tariff implements Serializable {
 
     @Column(name="MAXIMUM_DAYS")
     private int maximalAmountOfDays;
+
+    public Tariff(String name, LocalDate beginningDate, LocalDate endDate) {
+        this.name = name;
+        this.beginningDate = beginningDate;
+        this.endDate = endDate;
+    }
 
     public Tariff() {
     }

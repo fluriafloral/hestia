@@ -38,6 +38,15 @@ public class DailyRate {
     @Column(name="INCREASE_PER_CHILDREN")
     private BigDecimal increasePerChildren;
 
+    public DailyRate(RoomType roomType, Tariff tariff, BigDecimal baseValue, BigDecimal increasePerGuest,
+            BigDecimal increasePerChildren) {
+        this.roomType = roomType;
+        this.tariff = tariff;
+        this.baseValue = baseValue;
+        this.increasePerGuest = increasePerGuest;
+        this.increasePerChildren = increasePerChildren;
+    }
+
     public DailyRate() {
     }
 

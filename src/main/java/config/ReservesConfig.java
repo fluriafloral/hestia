@@ -6,9 +6,12 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import reserves.internal.DailyRateServiceImpl;
 import reserves.internal.GuestServiceImpl;
 import reserves.internal.RoomServiceImpl;
 import reserves.internal.RoomTypeServiceImpl;
+import reserves.internal.dailyRate.DailyRateRepository;
+import reserves.internal.dailyRate.DailyRateService;
 import reserves.internal.guest.GuestRepository;
 import reserves.internal.guest.GuestService;
 import reserves.internal.room.RoomRepository;
@@ -30,6 +33,9 @@ public class ReservesConfig {
     @Autowired
     private GuestRepository guestRepo;
 
+    @Autowired 
+    private DailyRateRepository dailyRateRepo;
+
     @Bean 
     public RoomTypeService roomTypeService() {
         return new RoomTypeServiceImpl(roomTypeRepo);
@@ -43,5 +49,10 @@ public class ReservesConfig {
     @Bean
     public GuestService guestService() {
         return new GuestServiceImpl(guestRepo);
+    }
+
+    @Bean
+    public DailyRateService dailyRateService() {
+        return new DailyRateServiceImpl(dailyRateRepo);
     }
 }
