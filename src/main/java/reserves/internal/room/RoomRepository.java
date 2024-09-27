@@ -10,8 +10,8 @@ import reserves.internal.roomType.RoomType;
 
 public interface RoomRepository extends JpaRepository<Room, Long>{
 
-    public Optional<Room> findByName(String name);
-    public Boolean  existsByName(String name);
-    public List<Room> findByStatus(RoomStatus status);
-    public List<Room> findByRoomType(RoomType type);
+    Optional<Room> findByName(String name);
+    Boolean  existsByName(String name);
+    List<Room> findByStatus(RoomStatus status);
+    List<Room> findByRoomType(RoomType type);
 }
