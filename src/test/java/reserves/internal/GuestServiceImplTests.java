@@ -90,7 +90,7 @@ public class GuestServiceImplTests {
         List<Guest> guestList = guestService.findAllGuests();
 
         assertThat(guestList).isNotNull();
-        assertThat(guestList.size()).isEqualTo(2);
+        assertEquals(guestList.size(), 2);
     }
 
     @Test
