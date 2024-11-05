@@ -25,7 +25,6 @@ import reserves.internal.room.Room;
 import reserves.internal.room.Room.RoomStatus;
 import reserves.internal.room.RoomRepository;
 import reserves.internal.roomType.RoomType;
-import reserves.internal.roomType.RoomTypeRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class RoomServiceImplTests {
@@ -36,12 +35,9 @@ public class RoomServiceImplTests {
     @Mock
     private RoomRepository roomRepo;
 
-    @Mock
-    private RoomTypeRepository roomTypeRepo;
-
     private Room room;
 
-    private RoomType roomType;
+    private RoomType roomType ;
 
     @BeforeEach
     public void setUp() {
@@ -62,33 +58,17 @@ public class RoomServiceImplTests {
     }
 
     @Test
-    void testSaveRoomFailNameEmpty() {
+    void testSaveRoomFailNameAlreadyInUse() {
 
-        Room roomEmptyName = new Room("", roomType, 2);
+        Room roomNameInUse = new Room("Test Room", roomType, 1);
+        when(roomRepo.existsByName(roomNameInUse.getName())).thenReturn(true);
 
-        given(roomRepo.findByName(roomEmptyName.getName())).isEmpty();
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            roomService.saveRoom(roomEmptyName);
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            roomService.saveRoom(roomNameInUse);
         });
 
         verify(roomRepo, never()).save(any(Room.class));
-        assertTrue(exception.getMessage().contains("Name cannot be empty"));
-    }
-
-    @Test
-    void testSaveRoomFailNameAlreadyExists() {
-
-        Room roomAlreadyExists = new Room("Test Room", roomType, 1);
-
-        when(roomRepo.existsByName(roomAlreadyExists.getName())).thenReturn(true);
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            roomService.saveRoom(roomAlreadyExists);
-        });
-
-        verify(roomRepo, never()).save(any(Room.class));
-        assertTrue(exception.getMessage().contains("Name already declared"));
+        assertTrue(exception.getMessage().contains("Name already in use"));
     }
 
     @Test
@@ -150,7 +130,7 @@ public class RoomServiceImplTests {
     }
 
     @Test
-    void testUpdateRoom() {
+    void testUpdateRoomSuccess() {
 
         String nameUpdate = "Test Update";
         when(roomRepo.save(room)).thenReturn(room);
@@ -159,6 +139,21 @@ public class RoomServiceImplTests {
         Room updatedRoom = roomService.updateRoom(room);
 
         assertEquals(nameUpdate, updatedRoom.getName());
+    }
+
+    @Test
+    void testUpdateRoomFailNameAlreadyInUse() {
+
+        Room roomNameInUse = new Room("Test Room 1", roomType, 1);
+        when(roomRepo.nameAlreadyInUse("Test Room", roomNameInUse.getId())).thenReturn(true);
+        roomNameInUse.setName("Test Room");
+
+        Exception exception = assertThrows(IllegalStateException.class, () -> {
+            roomService.updateRoom(roomNameInUse);
+        });
+
+        verify(roomRepo, never()).save(any(Room.class));
+        assertTrue(exception.getMessage().contains("Name already in use"));
     }
 
     @Test

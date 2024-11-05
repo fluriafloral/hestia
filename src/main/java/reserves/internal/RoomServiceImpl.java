@@ -26,11 +26,9 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room saveRoom(Room room) {
-        if (room.getName().isBlank()) { throw new IllegalArgumentException("Name cannot be empty"); }
-        if (roomRepo.existsByName(room.getName())) { throw new IllegalArgumentException("Name already declared"); }
-        if (roomTypeRepo.existsById(room.getRoomType().getId())) { throw new IllegalArgumentException("RoomType Not found"); }
-        if (room.getMaxOccupation() < 1) { throw new IllegalArgumentException("Maximum occupation must be greater than 0"); }
 
+        if (roomRepo.existsByName(room.getName())) { throw new IllegalStateException("Name already in use"); }
+        
         return roomRepo.save(room);
     }
 
@@ -56,9 +54,8 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public Room updateRoom(Room room) {
-        if (room.getName().isBlank()) { throw new IllegalArgumentException("Name cannot be empty"); }
-        if (roomTypeRepo.existsById(room.getRoomType().getId())) { throw new IllegalArgumentException("RoomType Not found"); }
-        if (room.getMaxOccupation() < 1) { throw new IllegalArgumentException("Maximum occupation must be greater than 0"); }
+        
+        if (roomRepo.nameAlreadyInUse(room.getName(), room.getId())) { throw new IllegalStateException("Name already in use"); }
 
         return roomRepo.save(room);
     }

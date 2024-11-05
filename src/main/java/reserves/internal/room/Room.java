@@ -54,6 +54,11 @@ public class Room implements Serializable {
     private int maxChildrenOccupation;
 
     public Room(String name, RoomType roomType, int maxOccupation) {
+
+        if (name == null || name.isBlank()) { throw new IllegalArgumentException("name missing"); }
+        if (roomType == null) { throw new IllegalArgumentException("room type missing"); }
+        if (maxOccupation < 1) { throw new IllegalArgumentException("invalid maximum occupation"); }
+
         this.name = name;
         this.roomType = roomType;
         this.maxOccupation = maxOccupation;
