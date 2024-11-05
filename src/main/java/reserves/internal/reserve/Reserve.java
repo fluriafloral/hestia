@@ -9,8 +9,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -26,29 +26,46 @@ public class Reserve {
     private Long id;
 
     @Temporal(TemporalType.DATE)
-    @Column(name="CHECK_IN")
-    private LocalDate start;
+    @Column(name="CHECK_IN", nullable=false)
+    private LocalDate startDate;
 
     @Temporal(TemporalType.DATE)
-    @Column(name="CHECK_OUT")
-    private LocalDate end;
+    @Column(name="CHECK_OUT", nullable=false)
+    private LocalDate endDate;
 
     @OneToMany
     @JoinColumn(name="GUEST_ID")
     private List<Guest> guests;
 
-    @OneToOne
-    @JoinColumn(name="ROOM_ID")
+    @ManyToOne
+    @JoinColumn(name="ROOM_ID", nullable=false, unique=false)
     private Room room;
 
-    public Reserve(LocalDate start, LocalDate end) {
-        this.start = start;
-        this.end = end;
+    public Reserve(LocalDate startDate, LocalDate endDate, Room room, List<Guest> guests) {
+
+        if (startDate == null) { throw new IllegalArgumentException("start date missing"); }
+        if (endDate == null) { throw new IllegalArgumentException("end date missing"); }
+        if (endDate.isBefore(startDate)) { throw new IllegalArgumentException("end date before start date"); }
+        if (room == null) { throw new IllegalArgumentException("room missing"); }
+        if (guests == null) { throw new IllegalArgumentException("guests list missing"); }
+
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.room = room;
+        this.guests = guests;
     }
 
-    public Reserve(List<Guest> guests) {
-        this.guests = guests;
-    }   
+    public Reserve(LocalDate startDate, LocalDate endDate, Room room) {
+
+        if (startDate == null) { throw new IllegalArgumentException("start date missing"); }
+        if (endDate == null) { throw new IllegalArgumentException("end date missing"); }
+        if (endDate.isBefore(startDate)) { throw new IllegalArgumentException("end date before start date"); }
+        if (room == null || guests.isEmpty()) { throw new IllegalArgumentException("room missing"); }
+
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.room = room;
+    } 
 
     public Reserve(Long id) {
         this.id = id;
@@ -61,20 +78,20 @@ public class Reserve {
         return id;
     }
 
-    public LocalDate getStart() {
-        return start;
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStart(LocalDate start) {
-        this.start = start;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
-    public LocalDate getEnd() {
-        return end;
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setEnd(LocalDate end) {
-        this.end = end;
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 
     public List<Guest> getGuests() {

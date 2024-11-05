@@ -8,12 +8,15 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import reserves.internal.DailyRateServiceImpl;
 import reserves.internal.GuestServiceImpl;
+import reserves.internal.ReserveServiceImpl;
 import reserves.internal.RoomServiceImpl;
 import reserves.internal.RoomTypeServiceImpl;
 import reserves.internal.dailyRate.DailyRateRepository;
 import reserves.internal.dailyRate.DailyRateService;
 import reserves.internal.guest.GuestRepository;
 import reserves.internal.guest.GuestService;
+import reserves.internal.reserve.ReserveRepository;
+import reserves.internal.reserve.ReserveService;
 import reserves.internal.room.RoomRepository;
 import reserves.internal.room.RoomService;
 import reserves.internal.roomType.RoomTypeRepository;
@@ -36,6 +39,9 @@ public class ReservesConfig {
     @Autowired 
     private DailyRateRepository dailyRateRepo;
 
+    @Autowired
+    private ReserveRepository reserveRepo;
+
     @Bean 
     public RoomTypeService roomTypeService() {
         return new RoomTypeServiceImpl(roomTypeRepo);
@@ -54,5 +60,10 @@ public class ReservesConfig {
     @Bean
     public DailyRateService dailyRateService() {
         return new DailyRateServiceImpl(dailyRateRepo);
+    }
+
+    @Bean 
+    public ReserveService reserveService() {
+        return new ReserveServiceImpl(reserveRepo);
     }
 }
